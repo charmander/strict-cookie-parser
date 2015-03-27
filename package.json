@@ -1,0 +1,23 @@
+{
+	"name": "strict-cookie-parser",
+	"version": "1.0.0",
+	"description": "Parses cookie headers according to RFC6265.",
+	"keywords": ["cookie", "middleware"],
+	"homepage": "https://github.com/charmander/strict-cookie-parser",
+	"bugs": {
+		"url": "https://github.com/charmander/strict-cookie-parser/issues"
+	},
+	"license": "ISC",
+	"files": ["strict-cookie-parser.js"],
+	"main": "strict-cookie-parser",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/charmander/strict-cookie-parser"
+	},
+	"scripts": {
+		"test": "tap test"
+	},
+	"devDependencies": {
+		"tap": "~0.7.1"
+	}
+}

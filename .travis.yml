@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+    - "iojs"
+install:
+    - npm install
+    - npm install -g jshint jscs
+script: node_modules/tap/bin/tap.js test && jshint . && jscs .
+sudo: false
