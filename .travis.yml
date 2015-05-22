@@ -4,5 +4,5 @@ node_js:
 install:
     - npm install
     - npm install -g jshint jscs
-script: node_modules/tap/bin/tap.js test && jshint . && jscs .
+script: node_modules/tap/bin/run.js test && jshint . && jscs .
 sudo: false
