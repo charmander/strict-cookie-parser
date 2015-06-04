@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-    - "iojs"
+    - iojs
+    - "0.12"
 install:
     - npm install
     - npm install -g jshint jscs
