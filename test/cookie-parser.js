@@ -36,6 +36,24 @@ tap.test("Valid cookies should be parsed correctly", function (t) {
 		t.end();
 	});
 
+	t.test("Long whitespace sequences parse in reasonable time", function (t) {
+		var spaces = new Array(10001).join(" ");
+		var start = process.hrtime();
+		var result = parseCookieHeader('hello="world' + spaces + '"');
+		var time = process.hrtime(start);
+
+		t.equal(result, null);
+		t.ok(time[0] + time[1] * 1e-9 < 0.01);
+		t.end();
+	});
+
+	t.test("Optional whitespace is ignored", function (t) {
+		var result = parseCookieHeader("    \thello=world    \t");
+		t.notEqual(result, null);
+		t.equal(result.get("hello"), "world");
+		t.end();
+	});
+
 	t.end();
 });
 

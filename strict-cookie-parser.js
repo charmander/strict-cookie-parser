@@ -1,8 +1,31 @@
 "use strict";
 
-var LEADING_OPTIONAL_WHITESPACE = /^[ \t]+/;
-var TRAILING_OPTIONAL_WHITESPACE = /[ \t]+$/;
 var COOKIE_PAIR = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)=(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
+
+function isOptionalWhitespace(c) {
+	return c === " " || c === "\t";
+}
+
+function stripCookieHeader(header) {
+	var start = 0;
+	var end = header.length - 1;
+
+	while (
+		start < header.length &&
+		isOptionalWhitespace(header.charAt(start))
+	) {
+		start++;
+	}
+
+	while (
+		end >= start &&
+		isOptionalWhitespace(header.charAt(end))
+	) {
+		end--;
+	}
+
+	return header.substring(start, end + 1);
+}
 
 function parseStrippedCookieHeader(cookieHeader) {
 	if (cookieHeader === "") {
@@ -37,20 +60,14 @@ function parseStrippedCookieHeader(cookieHeader) {
 
 function parseCookieHeader(cookieHeader) {
 	return parseStrippedCookieHeader(
-		cookieHeader
-			.replace(LEADING_OPTIONAL_WHITESPACE, "")
-			.replace(TRAILING_OPTIONAL_WHITESPACE, "")
+		stripCookieHeader(cookieHeader)
 	);
 }
 
 function middleware(request, response, next) {
 	if ("cookie" in request.headers) {
-		// The built-in HTTP parser already strips leading whitespace.
-		var cookieHeader =
-			request.headers.cookie
-				.replace(TRAILING_OPTIONAL_WHITESPACE, "");
-
-		var cookies = parseStrippedCookieHeader(cookieHeader);
+		var cookieHeader = request.headers.cookie;
+		var cookies = parseCookieHeader(cookieHeader);
 
 		if (cookies) {
 			request.cookies = cookies;
