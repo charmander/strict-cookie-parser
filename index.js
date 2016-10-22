@@ -27,6 +27,25 @@ function stripCookieHeader(header) {
 	return header.substring(start, end + 1);
 }
 
+function parseCookiePair(cookiePair) {
+	var match = COOKIE_PAIR.exec(cookiePair);
+
+	if (match === null) {
+		return null;
+	}
+
+	var name = match[1];
+	var value =
+		match[2] === undefined ?
+			match[3] :
+			match[2];
+
+	return {
+		name: name,
+		value: value,
+	};
+}
+
 function parseStrippedCookieHeader(cookieHeader) {
 	if (cookieHeader === "") {
 		return null;
@@ -37,22 +56,15 @@ function parseStrippedCookieHeader(cookieHeader) {
 	var cookies = new Map();
 
 	for (var i = 0; i < cookiePairs.length; i++) {
-		var cookiePair = cookiePairs[i];
-		var match = COOKIE_PAIR.exec(cookiePair);
+		var cookiePair = parseCookiePair(cookiePairs[i]);
 
 		// One unparseable cookie means that
 		// the entire header is invalid.
-		if (match === null) {
+		if (cookiePair === null) {
 			return null;
 		}
 
-		var cookieName = match[1];
-		var cookieValue =
-			match[2] === undefined ?
-				match[3] :
-				match[2];
-
-		cookies.set(cookieName, cookieValue);
+		cookies.set(cookiePair.name, cookiePair.value);
 	}
 
 	return cookies;
@@ -80,5 +92,6 @@ function middleware(request, response, next) {
 	next();
 }
 
+exports.parseCookiePair = parseCookiePair;
 exports.parseCookieHeader = parseCookieHeader;
 exports.middleware = middleware;
