@@ -8,8 +8,7 @@
 		"url": "https://github.com/charmander/strict-cookie-parser/issues"
 	},
 	"license": "ISC",
-	"files": ["strict-cookie-parser.js"],
-	"main": "strict-cookie-parser",
+	"files": ["index.js"],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/charmander/strict-cookie-parser"
