@@ -1,6 +1,17 @@
 language: node_js
 node_js:
-    - iojs
-    - "0.12"
-script: node_modules/tap/bin/run.js test
-sudo: false
+  - "4"
+  - "6"
+  - "8"
+  - "9"
+install:
+  - npm install --no-package-lock --ignore-scripts
+before_script:
+  - tmp=$(mktemp --directory)
+  - bash -O dotglob -O extglob -c 'mv !(node_modules|test) "$1"/' bash "$tmp"
+  - pack=$(npm pack "$tmp")
+  - node -p '"sha512-" + Buffer.from(process.argv[1], "hex").toString("base64")' $(sha512sum -- "$pack")
+  - tar --strip-components=1 -x -v -f "$pack"
+  - npm install --no-package-lock
+script:
+  - node_modules/.bin/tap test

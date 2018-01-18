@@ -1,23 +1,34 @@
 {
 	"name": "strict-cookie-parser",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"description": "Parses cookie headers according to RFC 6265.",
-	"keywords": ["cookie", "middleware"],
+	"keywords": [
+		"cookie",
+		"middleware"
+	],
 	"homepage": "https://github.com/charmander/strict-cookie-parser",
-	"bugs": {
-		"url": "https://github.com/charmander/strict-cookie-parser/issues"
-	},
+	"bugs": "https://github.com/charmander/strict-cookie-parser/issues",
 	"license": "ISC",
-	"files": ["index.js"],
+	"author": {
+		"name": "Charmander",
+		"email": "~@charmander.me",
+		"url": "https://charmander.me/"
+	},
+	"files": [
+		"index.js"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/charmander/strict-cookie-parser"
 	},
+	"devDependencies": {
+		"@charmander/eslint-config-base": "1.0.3",
+		"tap": "^11.0.1"
+	},
 	"scripts": {
 		"test": "tap test"
 	},
-	"devDependencies": {
-		"@charmander/eslint-config-base": "1.0.3",
-		"tap": "7.1.2"
+	"engines": {
+		"node": ">=4.0.0"
 	}
 }
