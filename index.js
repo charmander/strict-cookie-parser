@@ -3,7 +3,7 @@
 var COOKIE_PAIR = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)=(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
 
 function isOptionalWhitespace(c) {
-	return c === " " || c === "\t";
+	return c === 32 || c === 9;
 }
 
 function stripCookieHeader(header) {
@@ -12,14 +12,14 @@ function stripCookieHeader(header) {
 
 	while (
 		start < header.length &&
-		isOptionalWhitespace(header.charAt(start))
+		isOptionalWhitespace(header.charCodeAt(start))
 	) {
 		start++;
 	}
 
 	while (
 		end >= start &&
-		isOptionalWhitespace(header.charAt(end))
+		isOptionalWhitespace(header.charCodeAt(end))
 	) {
 		end--;
 	}
