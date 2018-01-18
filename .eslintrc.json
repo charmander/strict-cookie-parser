@@ -1,0 +1,9 @@
+{
+	"env": {
+		"node": true
+	},
+	"extends": "@charmander/eslint-config-base",
+	"rules": {
+		"quotes": ["error", "double", {"avoidEscape": true}]
+	}
+}
