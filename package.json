@@ -23,10 +23,10 @@
 	},
 	"devDependencies": {
 		"@charmander/eslint-config-base": "1.1.0",
-		"tap": "^11.0.1"
+		"@charmander/test": "0.2.0"
 	},
 	"scripts": {
-		"test": "tap test"
+		"test": "node test"
 	},
 	"engines": {
 		"node": ">=6.0.0"
