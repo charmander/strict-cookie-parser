@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const COOKIE_PAIR = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)=(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
 
@@ -46,11 +46,11 @@ const parseCookiePair = cookiePair => {
 };
 
 const parseStrippedCookieHeader = cookieHeader => {
-	if (cookieHeader === "") {
+	if (cookieHeader === '') {
 		return null;
 	}
 
-	const cookiePairs = cookieHeader.split("; ");
+	const cookiePairs = cookieHeader.split('; ');
 
 	const cookies = new Map();
 
@@ -75,7 +75,7 @@ const parseCookieHeader = cookieHeader =>
 	);
 
 const middleware = (request, response, next) => {
-	if ("cookie" in request.headers) {
+	if ('cookie' in request.headers) {
 		const cookieHeader = request.headers.cookie;
 		const cookies = parseCookieHeader(cookieHeader);
 

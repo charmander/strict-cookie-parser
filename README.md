@@ -6,12 +6,12 @@ A module to parse cookie headers according to [RFC 6265][].
 It produces a [Map][], for which you may need to provide a substitute.
 
 ```javascript
-const strictCookieParser = require("strict-cookie-parser");
+const strictCookieParser = require('strict-cookie-parser');
 
-strictCookieParser.parseCookieHeader("hello=world; foo=bar ")
-// Map { hello: "world", foo: "bar" }
+strictCookieParser.parseCookieHeader('hello=world; foo=bar ')
+// Map { hello => 'world', foo => 'bar' }
 
-strictCookieParser.parseCookieHeader("not a cookie")
+strictCookieParser.parseCookieHeader('not a cookie')
 // null
 
 app.use(strictCookieParser.middleware);
