@@ -74,24 +74,7 @@ const parseCookieHeader = cookieHeader =>
 		stripCookieHeader(cookieHeader)
 	);
 
-const middleware = (request, response, next) => {
-	if ('cookie' in request.headers) {
-		const cookieHeader = request.headers.cookie;
-		const cookies = parseCookieHeader(cookieHeader);
-
-		if (cookies) {
-			request.cookies = cookies;
-			next();
-			return;
-		}
-	}
-
-	request.cookies = new Map();
-	next();
-};
-
 module.exports = {
 	parseCookiePair,
 	parseCookieHeader,
-	middleware,
 };
