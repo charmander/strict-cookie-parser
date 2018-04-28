@@ -22,7 +22,7 @@
 		"url": "https://github.com/charmander/strict-cookie-parser"
 	},
 	"devDependencies": {
-		"@charmander/eslint-config-base": "1.0.3",
+		"@charmander/eslint-config-base": "1.1.0",
 		"tap": "^11.0.1"
 	},
 	"scripts": {
