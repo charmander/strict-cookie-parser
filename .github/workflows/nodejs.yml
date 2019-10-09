@@ -1,0 +1,34 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version:
+          - 6.x
+          - 8.x
+          - 10.x
+          - 12.x
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Set up test environment
+      run: |
+        tmp=$(mktemp --directory)
+        bash -O dotglob -O extglob -c 'mv !(node_modules|test.js) "$1"/' bash "$tmp"
+        pack=$(npm pack "$tmp")
+        node -p '"sha512-" + Buffer.from(process.argv[1], "hex").toString("base64")' $(sha512sum -- "$pack")
+        tar --strip-components=1 -x -v -f "$pack"
+        npm install --no-save
+    - name: Run tests
+      run: |
+        node test

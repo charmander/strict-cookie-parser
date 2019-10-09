@@ -36,5 +36,5 @@ strictCookieParser.parseCookieValue(' foo')
   [Map]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
   [strict-cookie-middleware]: https://github.com/charmander/strict-cookie-middleware
 
-  [ci]: https://travis-ci.org/charmander/strict-cookie-parser
-  [ci-image]: https://api.travis-ci.org/charmander/strict-cookie-parser.svg
+  [ci]: https://github.com/charmander/strict-cookie-parser/actions
+  [ci-image]: https://github.com/charmander/strict-cookie-parser/workflows/Node%20CI/badge.svg
