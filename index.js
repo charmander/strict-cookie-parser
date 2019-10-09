@@ -40,14 +40,14 @@ const parseCookieValue = cookieValue => {
 };
 
 const parseCookiePair = cookiePair => {
-	const parts = cookiePair.split('=', 2);
+	const splitAt = cookiePair.indexOf('=');
 
-	if (parts.length !== 2) {
+	if (splitAt === -1) {
 		return null;
 	}
 
-	const name = parts[0];
-	const value = parseCookieValue(parts[1]);
+	const name = cookiePair.slice(0, splitAt);
+	const value = parseCookieValue(cookiePair.slice(splitAt + 1));
 
 	if (!isCookieName(name) || value === null) {
 		return null;

@@ -13,12 +13,20 @@ test('Single unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world');
 	assert.notStrictEqual(result, null);
 	assert.strictEqual(result.get('hello'), 'world');
+
+	const result2 = parseCookieHeader('a=b=c');
+	assert.notStrictEqual(result2, null);
+	assert.strictEqual(result2.get('a'), 'b=c');
 });
 
 test('Single quoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello="world"');
 	assert.notStrictEqual(result, null);
 	assert.strictEqual(result.get('hello'), 'world');
+
+	const result2 = parseCookieHeader('a="b=c"');
+	assert.notStrictEqual(result2, null);
+	assert.strictEqual(result2.get('a'), 'b=c');
 });
 
 test('Multiple unquoted cookies are parsed correctly', () => {
