@@ -8,7 +8,7 @@ For Connect (Express) middleware, see [strict-cookie-middleware][].
 const strictCookieParser = require('strict-cookie-parser');
 
 strictCookieParser.parseCookieHeader('hello=world; foo=bar ')
-// Map { hello => 'world', foo => 'bar' }
+// Map { 'hello' => 'world', 'foo' => 'bar' }
 
 strictCookieParser.parseCookieHeader('not a cookie')
 // null
