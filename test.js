@@ -3,18 +3,30 @@
 const assert = require('assert');
 const test = require('@charmander/test')(module);
 
-const {parseCookieHeader} = require('./');
+const {
+	isCookieName,
+	parseCookieHeader,
+	parseCookieValue,
+} = require('./');
 
 test('Single unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world');
 	assert.notStrictEqual(result, null);
 	assert.strictEqual(result.get('hello'), 'world');
+
+	const result2 = parseCookieHeader('a=b=c');
+	assert.notStrictEqual(result2, null);
+	assert.strictEqual(result2.get('a'), 'b=c');
 });
 
 test('Single quoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello="world"');
 	assert.notStrictEqual(result, null);
 	assert.strictEqual(result.get('hello'), 'world');
+
+	const result2 = parseCookieHeader('a="b=c"');
+	assert.notStrictEqual(result2, null);
+	assert.strictEqual(result2.get('a'), 'b=c');
 });
 
 test('Multiple unquoted cookies are parsed correctly', () => {
@@ -56,4 +68,16 @@ test('Invalid cookies are rejected', () => {
 	assert.strictEqual(parseCookieHeader('a=white space'), null);
 	assert.strictEqual(parseCookieHeader('a=comma,character'), null);
 	assert.strictEqual(parseCookieHeader('a=double"quote'), null);
+	assert.strictEqual(parseCookieHeader('name"="foo"'), null);
+});
+
+test('.parseCookieValue works as expected', () => {
+	assert.strictEqual(parseCookieValue(' foo'), null);
+	assert.strictEqual(parseCookieValue('foo'), 'foo');
+	assert.strictEqual(parseCookieValue('"foo"'), 'foo');
+});
+
+test('.isCookieName works as expected', () => {
+	assert.strictEqual(isCookieName('foo'), true);
+	assert.strictEqual(isCookieName('m=m'), false);
 });
