@@ -1,6 +1,6 @@
 {
 	"name": "strict-cookie-parser",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Parses cookie headers according to RFC 6265.",
 	"keywords": [
 		"cookie"
