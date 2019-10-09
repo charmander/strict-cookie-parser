@@ -60,6 +60,7 @@ test('Invalid cookies are rejected', () => {
 	assert.strictEqual(parseCookieHeader('a=white space'), null);
 	assert.strictEqual(parseCookieHeader('a=comma,character'), null);
 	assert.strictEqual(parseCookieHeader('a=double"quote'), null);
+	assert.strictEqual(parseCookieHeader('name"="foo"'), null);
 });
 
 test('.parseCookieValue works as expected', () => {
