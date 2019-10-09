@@ -1,6 +1,7 @@
 'use strict';
 
-const COOKIE_PAIR = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)=(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
+const COOKIE_NAME = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)$/;
+const COOKIE_VALUE = /^(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
 
 const isOptionalWhitespace = c =>
 	c === 32 || c === 9;
@@ -26,18 +27,37 @@ const stripCookieHeader = header => {
 	return header.substring(start, end + 1);
 };
 
-const parseCookiePair = cookiePair => {
-	const match = COOKIE_PAIR.exec(cookiePair);
+const parseCookieName = cookieName => {
+	const nameMatch = COOKIE_NAME.exec(cookieName);
+	if (nameMatch === null) {
+		return null;
+	}
+	return nameMatch[1];
+};
 
-	if (match === null) {
+const parseCookieValue = cookieValue => {
+	const valueMatch = COOKIE_VALUE.exec(cookieValue);
+	if (valueMatch === null) {
+		return null;
+	}
+	return valueMatch[1] === undefined ?
+		valueMatch[2] :
+		valueMatch[1];
+};
+
+const parseCookiePair = cookiePair => {
+	const parts = cookiePair.split('=', 2);
+
+	if (parts.length !== 2) {
 		return null;
 	}
 
-	const name = match[1];
-	const value =
-		match[2] === undefined ?
-			match[3] :
-			match[2];
+	const name = parseCookieName(parts[0]);
+	const value = parseCookieValue(parts[1]);
+
+	if (name === null || value === null) {
+		return null;
+	}
 
 	return {
 		name,
@@ -75,6 +95,8 @@ const parseCookieHeader = cookieHeader =>
 	);
 
 module.exports = {
+	parseCookieName,
+	parseCookieValue,
 	parseCookiePair,
 	parseCookieHeader,
 };

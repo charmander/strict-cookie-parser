@@ -15,6 +15,20 @@ strictCookieParser.parseCookieHeader('not a cookie')
 
 strictCookieParser.parseCookiePair('single=pair')
 // { name: 'single', value: 'pair' }
+
+strictCookieParser.parseCookieName('foo')
+// 'foo'
+
+strictCookieParser.parseCookieName('m=m')
+// invalid - cookie names cannot contain =
+// null
+
+strictCookieParser.parseCookieValue('"foo"')
+// 'foo'
+
+strictCookieParser.parseCookieValue(' foo')
+// invalid - unquoted cookie values cannot begin with a space
+// null
 ```
 
 
