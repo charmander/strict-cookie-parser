@@ -9,6 +9,13 @@ const {
 	parseCookieValue,
 } = require('./');
 
+const isCtl = c =>
+	c <= 31 || c === 127;
+
+const SEPARATORS = new Set(
+	Array.from('()<>@,;:\\"/[]?={} \t', c => c.codePointAt(0))
+);
+
 test('Single unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world');
 	assert.notStrictEqual(result, null);
@@ -69,6 +76,20 @@ test('Invalid cookies are rejected', () => {
 	assert.strictEqual(parseCookieHeader('a=comma,character'), null);
 	assert.strictEqual(parseCookieHeader('a=double"quote'), null);
 	assert.strictEqual(parseCookieHeader('name"="foo"'), null);
+	assert.strictEqual(parseCookieHeader('helló=world'), null);
+	assert.strictEqual(parseCookieHeader('hello=wórld'), null);
+});
+
+test('Name parsing matches RFC 2616 token', () => {
+	for (let c = 0; c <= 127; c++) {
+		const result = parseCookieHeader(String.fromCodePoint(c) + '=foo');
+
+		if (isCtl(c) || SEPARATORS.has(c)) {
+			assert.strictEqual(result, null);
+		} else {
+			assert.strictEqual(result.get(String.fromCharCode(c)), 'foo');
+		}
+	}
 });
 
 test('.parseCookieValue works as expected', () => {
