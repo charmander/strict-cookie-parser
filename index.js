@@ -1,6 +1,6 @@
 'use strict';
 
-const COOKIE_NAME = /^([^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+)$/;
+const COOKIE_NAME = /^[^\x00-\x20\x7f()<>@,;:\\"/[\]?={}]+$/;
 const COOKIE_VALUE = /^(?:([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)|"([\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*)")$/;
 
 const isOptionalWhitespace = c =>
@@ -27,13 +27,7 @@ const stripCookieHeader = header => {
 	return header.substring(start, end + 1);
 };
 
-const parseCookieName = cookieName => {
-	const nameMatch = COOKIE_NAME.exec(cookieName);
-	if (nameMatch === null) {
-		return null;
-	}
-	return nameMatch[1];
-};
+const isCookieName = cookieName => COOKIE_NAME.test(cookieName);
 
 const parseCookieValue = cookieValue => {
 	const valueMatch = COOKIE_VALUE.exec(cookieValue);
@@ -52,10 +46,10 @@ const parseCookiePair = cookiePair => {
 		return null;
 	}
 
-	const name = parseCookieName(parts[0]);
+	const name = parts[0];
 	const value = parseCookieValue(parts[1]);
 
-	if (name === null || value === null) {
+	if (!isCookieName(name) || value === null) {
 		return null;
 	}
 
@@ -95,7 +89,7 @@ const parseCookieHeader = cookieHeader =>
 	);
 
 module.exports = {
-	parseCookieName,
+	isCookieName,
 	parseCookieValue,
 	parseCookiePair,
 	parseCookieHeader,

@@ -4,8 +4,8 @@ const assert = require('assert');
 const test = require('@charmander/test')(module);
 
 const {
+	isCookieName,
 	parseCookieHeader,
-	parseCookieName,
 	parseCookieValue,
 } = require('./');
 
@@ -69,7 +69,7 @@ test('.parseCookieValue works as expected', () => {
 	assert.strictEqual(parseCookieValue('"foo"'), 'foo');
 });
 
-test('.parseCookieName works as expected', () => {
-	assert.strictEqual(parseCookieName('foo'), 'foo');
-	assert.strictEqual(parseCookieName('m=m'), null);
+test('.isCookieName works as expected', () => {
+	assert.strictEqual(isCookieName('foo'), true);
+	assert.strictEqual(isCookieName('m=m'), false);
 });
