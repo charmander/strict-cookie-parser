@@ -3,6 +3,7 @@ node_js:
   - "6"
   - "8"
   - "10"
+  - "12"
 install:
   - npm install --no-save --ignore-scripts
 before_script:
