@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## [3.2.0][] – 2021-05-26
+
 ### Added
 
 - TypeScript typings
@@ -20,5 +23,6 @@
 - Non-ASCII characters are now rejected in names.
 
 
+[3.2.0]: https://github.com/charmander/strict-cookie-parser/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/charmander/strict-cookie-parser/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/charmander/strict-cookie-parser/compare/v3.0.0...v3.0.1
