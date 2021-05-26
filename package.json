@@ -14,7 +14,8 @@
 		"url": "https://charmander.me/"
 	},
 	"files": [
-		"index.js"
+		"index.js",
+		"index.d.ts"
 	],
 	"repository": {
 		"type": "git",
