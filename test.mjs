@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { strict as assert } from 'assert';
 
 import {
 	isCookieName,
@@ -20,36 +20,36 @@ const test = (name, run) => {
 
 test('Single unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world');
-	assert.notStrictEqual(result, null);
-	assert.strictEqual(result.get('hello'), 'world');
+	assert.notEqual(result, null);
+	assert.equal(result.get('hello'), 'world');
 
 	const result2 = parseCookieHeader('a=b=c');
-	assert.notStrictEqual(result2, null);
-	assert.strictEqual(result2.get('a'), 'b=c');
+	assert.notEqual(result2, null);
+	assert.equal(result2.get('a'), 'b=c');
 });
 
 test('Single quoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello="world"');
-	assert.notStrictEqual(result, null);
-	assert.strictEqual(result.get('hello'), 'world');
+	assert.notEqual(result, null);
+	assert.equal(result.get('hello'), 'world');
 
 	const result2 = parseCookieHeader('a="b=c"');
-	assert.notStrictEqual(result2, null);
-	assert.strictEqual(result2.get('a'), 'b=c');
+	assert.notEqual(result2, null);
+	assert.equal(result2.get('a'), 'b=c');
 });
 
 test('Multiple unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world; foo=bar');
-	assert.notStrictEqual(result, null);
-	assert.strictEqual(result.get('hello'), 'world');
-	assert.strictEqual(result.get('foo'), 'bar');
+	assert.notEqual(result, null);
+	assert.equal(result.get('hello'), 'world');
+	assert.equal(result.get('foo'), 'bar');
 });
 
 test('Multiple quoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello="world"; foo="bar"');
-	assert.notStrictEqual(result, null);
-	assert.strictEqual(result.get('hello'), 'world');
-	assert.strictEqual(result.get('foo'), 'bar');
+	assert.notEqual(result, null);
+	assert.equal(result.get('hello'), 'world');
+	assert.equal(result.get('foo'), 'bar');
 });
 
 test('Long whitespace sequences parse in reasonable time', () => {
@@ -58,28 +58,28 @@ test('Long whitespace sequences parse in reasonable time', () => {
 	const result = parseCookieHeader('hello="world' + spaces + '"');
 	const time = process.hrtime(start);
 
-	assert.strictEqual(result, null);
+	assert.equal(result, null);
 	assert.ok(time[0] + time[1] * 1e-9 < 0.01);
 });
 
 test('Optional whitespace is ignored', () => {
 	const result = parseCookieHeader('    \thello=world    \t');
-	assert.notStrictEqual(result, null);
-	assert.strictEqual(result.get('hello'), 'world');
+	assert.notEqual(result, null);
+	assert.equal(result.get('hello'), 'world');
 });
 
 test('Invalid cookies are rejected', () => {
-	assert.strictEqual(parseCookieHeader('hello'), null);
-	assert.strictEqual(parseCookieHeader('=world'), null);
-	assert.strictEqual(parseCookieHeader('hello = world'), null);
-	assert.strictEqual(parseCookieHeader('hello=world;foo=bar'), null);
-	assert.strictEqual(parseCookieHeader('/=separator'), null);
-	assert.strictEqual(parseCookieHeader('a=white space'), null);
-	assert.strictEqual(parseCookieHeader('a=comma,character'), null);
-	assert.strictEqual(parseCookieHeader('a=double"quote'), null);
-	assert.strictEqual(parseCookieHeader('name"="foo"'), null);
-	assert.strictEqual(parseCookieHeader('helló=world'), null);
-	assert.strictEqual(parseCookieHeader('hello=wórld'), null);
+	assert.equal(parseCookieHeader('hello'), null);
+	assert.equal(parseCookieHeader('=world'), null);
+	assert.equal(parseCookieHeader('hello = world'), null);
+	assert.equal(parseCookieHeader('hello=world;foo=bar'), null);
+	assert.equal(parseCookieHeader('/=separator'), null);
+	assert.equal(parseCookieHeader('a=white space'), null);
+	assert.equal(parseCookieHeader('a=comma,character'), null);
+	assert.equal(parseCookieHeader('a=double"quote'), null);
+	assert.equal(parseCookieHeader('name"="foo"'), null);
+	assert.equal(parseCookieHeader('helló=world'), null);
+	assert.equal(parseCookieHeader('hello=wórld'), null);
 });
 
 test('Name parsing matches RFC 2616 token', () => {
@@ -87,20 +87,20 @@ test('Name parsing matches RFC 2616 token', () => {
 		const result = parseCookieHeader(String.fromCodePoint(c) + '=foo');
 
 		if (isCtl(c) || SEPARATORS.has(c)) {
-			assert.strictEqual(result, null);
+			assert.equal(result, null);
 		} else {
-			assert.strictEqual(result.get(String.fromCharCode(c)), 'foo');
+			assert.equal(result.get(String.fromCharCode(c)), 'foo');
 		}
 	}
 });
 
 test('.parseCookieValue works as expected', () => {
-	assert.strictEqual(parseCookieValue(' foo'), null);
-	assert.strictEqual(parseCookieValue('foo'), 'foo');
-	assert.strictEqual(parseCookieValue('"foo"'), 'foo');
+	assert.equal(parseCookieValue(' foo'), null);
+	assert.equal(parseCookieValue('foo'), 'foo');
+	assert.equal(parseCookieValue('"foo"'), 'foo');
 });
 
 test('.isCookieName works as expected', () => {
-	assert.strictEqual(isCookieName('foo'), true);
-	assert.strictEqual(isCookieName('m=m'), false);
+	assert.equal(isCookieName('foo'), true);
+	assert.equal(isCookieName('m=m'), false);
 });
