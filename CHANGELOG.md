@@ -1,5 +1,10 @@
 ## Unreleased
 
+### Changed
+
+- Dropped support for versions of Node older than Node 12.
+- Converted to ES module.
+
 
 ## [3.2.0][] – 2021-05-26
 

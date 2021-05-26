@@ -1,5 +1,3 @@
-'use strict';
-
 const COOKIE_NON_NAME = /[^\x21\x23-\x27\x2a\x2b\x2d\x2e\x30-\x39\x41-\x5a\x5e-\x7a\x7c\x7e]/;
 const COOKIE_NON_VALUE = /[^\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]/;
 
@@ -27,11 +25,11 @@ const stripCookieHeader = header => {
 	return header.substring(start, end + 1);
 };
 
-const isCookieName = cookieName =>
+export const isCookieName = cookieName =>
 	cookieName !== '' &&
 		!COOKIE_NON_NAME.test(cookieName);
 
-const parseCookieValue = cookieValue => {
+export const parseCookieValue = cookieValue => {
 	if (
 		cookieValue.length >= 2 &&
 		cookieValue.charCodeAt(0) === 34 &&
@@ -45,7 +43,7 @@ const parseCookieValue = cookieValue => {
 		cookieValue;
 };
 
-const parseCookiePair = cookiePair => {
+export const parseCookiePair = cookiePair => {
 	const splitAt = cookiePair.indexOf('=');
 
 	if (splitAt === -1) {
@@ -89,14 +87,7 @@ const parseStrippedCookieHeader = cookieHeader => {
 	return cookies;
 };
 
-const parseCookieHeader = cookieHeader =>
+export const parseCookieHeader = cookieHeader =>
 	parseStrippedCookieHeader(
 		stripCookieHeader(cookieHeader)
 	);
-
-module.exports = {
-	isCookieName,
-	parseCookieValue,
-	parseCookiePair,
-	parseCookieHeader,
-};

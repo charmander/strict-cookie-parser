@@ -5,28 +5,36 @@ Parses cookie headers according to [RFC 6265][], producing a [Map][].
 For Connect (Express) middleware, see [strict-cookie-middleware][].
 
 ```javascript
-const strictCookieParser = require('strict-cookie-parser');
+import { parseCookieHeader } from 'strict-cookie-parser';
 
-strictCookieParser.parseCookieHeader('hello=world; foo=bar ')
+parseCookieHeader('hello=world; foo=bar')
 // Map { 'hello' => 'world', 'foo' => 'bar' }
 
-strictCookieParser.parseCookieHeader('not a cookie')
+parseCookieHeader('not a cookie')
 // null
+```
 
-strictCookieParser.parseCookiePair('single=pair')
+```javascript
+import {
+    parseCookiePair,
+    isCookieName,
+    parseCookieValue,
+} from 'strict-cookie-parser';
+
+parseCookiePair('single=pair')
 // { name: 'single', value: 'pair' }
 
-strictCookieParser.isCookieName('foo')
+isCookieName('foo')
 // true
 
-strictCookieParser.isCookieName('m=m')
+isCookieName('m=m')
 // invalid - cookie names cannot contain =
 // false
 
-strictCookieParser.parseCookieValue('"foo"')
+parseCookieValue('"foo"')
 // 'foo'
 
-strictCookieParser.parseCookieValue(' foo')
+parseCookieValue(' foo')
 // invalid - unquoted cookie values cannot begin with a space
 // null
 ```

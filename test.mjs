@@ -1,13 +1,10 @@
-'use strict';
+import assert from 'assert';
 
-const assert = require('assert');
-const test = require('@charmander/test')(module);
-
-const {
+import {
 	isCookieName,
 	parseCookieHeader,
 	parseCookieValue,
-} = require('./');
+} from 'strict-cookie-parser';
 
 const isCtl = c =>
 	c <= 31 || c === 127;
@@ -15,6 +12,11 @@ const isCtl = c =>
 const SEPARATORS = new Set(
 	Array.from('()<>@,;:\\"/[]?={} \t', c => c.codePointAt(0))
 );
+
+const test = (name, run) => {
+	console.log(name);
+	run();
+};
 
 test('Single unquoted cookies are parsed correctly', () => {
 	const result = parseCookieHeader('hello=world');
