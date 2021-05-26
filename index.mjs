@@ -75,8 +75,7 @@ const parseStrippedCookieHeader = cookieHeader => {
 	for (let i = 0; i < cookiePairs.length; i++) {
 		const cookiePair = parseCookiePair(cookiePairs[i]);
 
-		// One unparseable cookie means that
-		// the entire header is invalid.
+		// One unparseable cookie means that the entire header is invalid.
 		if (cookiePair === null) {
 			return null;
 		}
