@@ -23,10 +23,9 @@ jobs:
     - name: Set up test environment
       run: |
         tmp=$(mktemp --directory)
-        bash -O dotglob -O extglob -c 'mv !(node_modules|test.mjs) "$1"/' bash "$tmp"
+        bash -O dotglob -O extglob -c 'mv !(test.mjs) "$1"/' bash "$tmp"
         pack=$(npm pack "$tmp")
         tar --strip-components=1 -x -v -f "$pack"
-        npm install --no-save
     - name: Run tests
       run: |
         node test.mjs
